@@ -1,0 +1,81 @@
+total_time = 0.010000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.005000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 3.812500
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.005000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.005000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.005000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.007000 ms
+output_value = 0.000000
+
+total_time = 0.006000 ms
+output_value = 0.000000
+

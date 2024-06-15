@@ -1,0 +1,153 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "fis.h"
+#include "drv.h"
+#include "dev.h"
+#include <time.h>
+#include <sys/time.h>
+
+void fis_init()
+{
+    off_t bar_add = 0;
+    char* g_szDmaSelPath;
+    g_szDmaSelPath = "/dev/memDriver0";
+    bar_add = BAR_ADDR;
+    dev_init(bar_add, g_szDmaSelPath);
+}
+
+
+float fis(float *input_data_i, short number)
+{
+   
+    //float time_use=0;
+    //struct timeval start;
+    //struct timeval end;
+   // gettimeofday(&start,NULL);
+	
+   // clock_t t_r0, t_r1, t_d0, t_d1, t_p0, t_p1, t_b0, t_b1;
+   // t_b0 = clock();
+    short var = 0;                       
+    float input_data[INPUT_DIM] = {0};
+    float weight6 = 0;
+
+    for (short idx = 0; idx < INPUT_DIM; idx++)
+    { 
+        input_data[idx] = input_data_i[idx];          // 获得输入点坐标数据
+        //printf("input_data:%f\n", input_data[idx]);
+    }
+    int in_data0;
+    input_data[0] = input_data[0]*4096;
+    in_data0 = (int)input_data[0];
+    //printf("in_data0=%x\n",in_data0);
+    int in_data1;
+    input_data[1] = input_data[1]*4096;
+    in_data1 = (int)input_data[1];
+    //printf("in_data1=%x\n", in_data1);
+    int in_data2;
+    input_data[2] = input_data[2]*4096;
+    in_data2 = (int)input_data[2];
+    //printf("in_data2=%x\n",in_data2);
+
+    drv_write32(0x2114, number);          //0-27组选择
+    drv_write32(0x21d0, in_data0);       //输入点坐标  
+    drv_write32(0x21d4, in_data1);
+    drv_write32(0x21d8, in_data2);
+  
+  /*  int end_old;
+    drv_write32(0x2140,0);
+    end_old=drv_read32(0x2140);
+    printf("end_old=%d\n",end_old);
+
+    float result_old;
+    result_old=drv_read32(0x2160);    
+    printf("result_old=%f\n",result_old/4096); 
+ */
+   // t_r0 = clock();
+   // gettimeofday(&start,NULL);
+   fpgaInitAndRun(&weight6);
+   // t_r1 = clock();
+   // printf("fpga runtime = %f ms\n",((double)(t_r1 - t_r0) / CLOCKS_PER_SEC * 1000));
+    //gettimeofday(&end,NULL);
+    //time_use=(end.tv_sec-start.tv_sec)*1000000+(end.tv_usec-start.tv_usec);//微秒
+    //printf("time_use is %f us\n",time_use );
+          
+    //t_d0 = clock();
+//    DDRreset();
+    //t_d1 = clock();
+    //printf("ddr reset time = %f ms\n",((double)(t_d1 - t_d0) / CLOCKS_PER_SEC * 1000));
+   // t_b1 = clock();
+   // printf("fis_all time = %f ms\n",((double)(t_b1 - t_b0) / CLOCKS_PER_SEC * 1000));
+    return weight6;
+
+}
+
+
+void fpgaInitAndRun(float *weight6)
+{
+    unsigned int end6;
+    float r0;
+    int r1;
+    float r2, r3, r4;
+    drv_write32(0x2134,1);                  //Fis算法启动
+
+/*    do {end = drv_read32(0x2154);         //FIS结束标志,end=1时算法结束
+        printf("end6 is %d\n",end);
+        }
+    while (end == 0);
+*/
+
+    for (int i=0; i<10000; i++)
+    {
+        end6 = drv_read32(0x2154);          //FIS结束标志,end=1时算法结束
+        //printf("end is %d\n",end);
+        if(end6==1)
+        {
+           break;
+        }
+    }
+
+    r0 = drv_read32(0x2174);
+    r1 = drv_read32(0x2174);
+    r2 = r0/4096;
+    r3 = ~(r1-1);
+    r4 = r3/4096;
+
+
+//    drv_write32(0x2140,0);  
+    //printf("%f %d %f %f %f\n", r0, r1, r2, r3, r4);
+    if(r2 < 1048570)
+    {
+      *weight6= r2;
+    }
+    else
+    {
+      *weight6= -r4;
+    }
+//    printf("weight6  is  %f\n", *weight);
+}
+
+
+void DDRreset()
+{
+    unsigned int over,reset,end;   
+    drv_write32(0x2010,0);
+    //end = drv_read32(0x2010);               //end复位
+    //printf("end  is  %d\n",end);
+
+    drv_write32(0x2014,1);                  //MIG 复位
+    //over = drv_read32(0x2014);
+    //printf("over  is  %d\n",over);
+    drv_write32(0x2014,0);
+    //over = drv_read32(0x2014);
+    //printf("over  is  %d\n",over);
+
+    drv_write32(0x2004,1);                  //FIS 复位
+    //reset = drv_read32(0x2004);
+    //printf("reset  is  %d\n",reset);
+    drv_write32(0x2004,0);
+    //reset = drv_read32(0x2004);
+    //printf("reset  is  %d\n",reset);
+} 
+
+

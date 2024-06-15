@@ -52,5 +52,5 @@
 
 `test_8core` contains the executable files and run script for simulation.
 
-Note that the driver source files may need to be modified as applying different FPGA boards.
+Note that the driver source files may need to be modified as applying on different FPGA boards.
 

@@ -1,5 +1,5 @@
 
-HPFIA is a FPGA-based fuzzy inference accelerator for situation assessment application on airborne equipment.
+HPFIA is a FPGA-based fuzzy inference accelerator for situation assessment application.
 We evaluate HPFIA at FPGA board equipped with Xilinx XC7VX690T, which work frequency is 125MHz.
 We host the FPGA board on a server configured with Phytium CPU @2.2GHz for control, and 32GB of DDR4-2133 RAM.
 

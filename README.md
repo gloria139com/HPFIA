@@ -6,7 +6,7 @@ We host the FPGA board on a server configured with Phytium CPU @2.2GHz for contr
 
 ## Requirements
 
-HPFIA is written entierly in Verilog. It requires Xilinx Vivado version 18.3 or superior.
+HPFIA is written entirely in Verilog. It requires Xilinx Vivado version 18.3 or superior.
 The upper software on host server is written in C. It has been tested with gcc compiler version 7.3.0 on Ubuntu OS.
 
 
